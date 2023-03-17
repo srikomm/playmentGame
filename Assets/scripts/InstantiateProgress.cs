@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class InstantiateProgress : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class InstantiateProgress : MonoBehaviour
     [SerializeField] public Button buildProductBtn;
     private GameObject cardPrefab;
     private GameObject newCard;
+    // private TMP_Text progressCardName;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +31,13 @@ public class InstantiateProgress : MonoBehaviour
     public void InstantiateProgressCard()
     {
         newCard = Instantiate(cardPrefab, canvas);
+        newCard.transform.Find("name").GetComponent<TMP_Text>().text = Controller.instance.getCurrentLevelProductName();
         buildProductBtn.interactable = false;
+    }
+
+    public void UpdateButtonState()
+    {
+        // newCard.transform.Find("name").GetComponent<TMP_Text>().text = currentLevelProductName;
+        buildProductBtn.interactable = true;
     }
 }

@@ -1,13 +1,18 @@
-// using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
 public class Controller : MonoBehaviour
 {
     public static Controller instance;
-    private void Awake() => instance = this;
+    private void Awake(){
+        instance = this;
+        productCard = GameObject.Find("ProductCard");
+        updateProductCardName();
+    }
 
     public double cash;
     public TMP_Text cashText;
@@ -20,6 +25,34 @@ public class Controller : MonoBehaviour
     public int GameLevel;
     public TMP_Text GameLevelText;
     public double AnnotatorSalary;
+    public InstantiateProgress instantiateProgress;
+    [SerializeField] public Button buildProductBtn;
+
+    private GameObject productCard;
+
+    private static int LEVEL_INCREMENT = 1;
+
+    Dictionary<int, string> PRODUCT_LEVEL_MAPPING = new Dictionary<int, string>(){
+        {
+            1, "LANDING PAGE"
+        },
+        {
+            2, "IMAGE ANNOTATIONS"
+        },
+        {
+            3, "VIDEO ANNOTATIONS"
+        },
+        {
+            4, "SFV1 ANNOTATIONS"
+        },
+        {
+            5, "SFV2 ANNOTATIONS"
+        },
+        {
+            6, "PCS ANNOTATIONS"
+        }
+    };
+          
 
     [System.Serializable] public class TeamMember
     {
@@ -36,6 +69,7 @@ public class Controller : MonoBehaviour
             Salary = SetSalary;
         }
     }
+
     public List<TeamMember> teamMembers;
 
     [System.Serializable] public class Candidate
@@ -71,6 +105,7 @@ public class Controller : MonoBehaviour
             Milestone = SetMilestone;
         }
     }
+
      public List<RevenueMilestone> revenueMilestones;
 
      [System.Serializable] public class Project
@@ -99,7 +134,7 @@ public class Controller : MonoBehaviour
         annotatorsCount = 2;
         GameLevel = 0;
         AnnotatorSalary = 10;
-        
+
         teamMembers = new List<TeamMember>();
         teamMembers.Add(new TeamMember("Eve Wozniak", 15, 2, 100));
         teamMembers.Add(new TeamMember("Zuckberg", 12, 2, 90));
@@ -129,7 +164,6 @@ public class Controller : MonoBehaviour
 
         CandidateManager.instance.RenderCandidates();
         
-        
     }
 
     // Update is called once per frame
@@ -139,11 +173,11 @@ public class Controller : MonoBehaviour
         brandValueText.text = brandValue.ToString();
         revenueText.text = revenue.ToString();
         annotatorsCountText.text = annotatorsCount.ToString();
-        GameLevelText.text = GameLevel.ToString();
+        GameLevelText.text = (GameLevel + 1).ToString();
 
         daysSinceStart = DayCounter.Instance.getDays();
         daysSinceStartText.text = daysSinceStart.ToString();
-        
+        checkRevenueMilestones();
     }
 
     public List<TeamMember> getTeamMembers()
@@ -164,11 +198,6 @@ public class Controller : MonoBehaviour
     {
         revenue += increment;
         cash += increment;
-
-        if(revenue >= revenueMilestones[GameLevel].Milestone)
-        {
-            increaseLevel(1);
-        }
     }
 
     public void increaseLevel(int increment)
@@ -176,8 +205,8 @@ public class Controller : MonoBehaviour
         GameLevel += increment;
         MarketProjects.instance.RenderProjects();
         CandidateManager.instance.RenderCandidates();
-
     }
+
     private void deductSalaries() 
     {
         double totalMonthlySalary = 0;
@@ -192,5 +221,30 @@ public class Controller : MonoBehaviour
         {
             SceneManager.LoadScene("Level_1");
         }
+    }
+
+    private void checkRevenueMilestones()
+    {
+        if(revenue >= revenueMilestones[GameLevel].Milestone)
+        {
+            levelUp();
+        }
+    }
+
+    public void levelUp()
+    {
+        GameLevel += LEVEL_INCREMENT;
+        MarketProjects.instance.RenderProjects();
+        // instantiateProgress.UpdateButtonState(PRODUCT_LEVEL_MAPPING[GameLevel]);
+        updateProductCardName();
+    }
+
+    private void updateProductCardName() {
+        productCard.transform.Find("name").GetComponent<TMP_Text>().text = PRODUCT_LEVEL_MAPPING[GameLevel + 1];
+        productCard.transform.Find("Button").GetComponent<Button>().interactable = true;
+    }
+
+    public string getCurrentLevelProductName() {
+        return PRODUCT_LEVEL_MAPPING[GameLevel + 1];
     }
 }

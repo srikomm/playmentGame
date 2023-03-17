@@ -2451,8 +2451,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2820,8 +2820,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -297.66, y: -191}
-  m_SizeDelta: {x: 179.7425, y: 48.0098}
+  m_AnchoredPosition: {x: -274.79562, y: -191}
+  m_SizeDelta: {x: 225.4712, y: 48.0098}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &444407310
 GameObject:
@@ -3741,7 +3741,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 67.556, y: -32.364}
+  m_AnchoredPosition: {x: 87.8, y: -40.92}
   m_SizeDelta: {x: 41.4561, y: 14.1798}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &531065093
@@ -3827,7 +3827,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.39700317, y: 0, z: 0.57460785, w: 0.39697266}
+  m_margin: {x: -0.39700317, y: 0, z: -15.31012, w: 0.39697266}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -7223,7 +7223,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 26.1, y: -33.3}
+  m_AnchoredPosition: {x: 26.1, y: -40.92}
   m_SizeDelta: {x: 41.4561, y: 14.1798}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1558810690
@@ -8387,6 +8387,8 @@ MonoBehaviour:
   GameLevel: 0
   GameLevelText: {fileID: 444407312}
   AnnotatorSalary: 0
+  instantiateProgress: {fileID: 1114547690}
+  buildProductBtn: {fileID: 0}
   teamMembers: []
   candidates: []
   daysSinceStartText: {fileID: 970154893}

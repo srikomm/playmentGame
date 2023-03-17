@@ -11,7 +11,7 @@ public class RevenueManager : MonoBehaviour
 
         if(Controller.instance.revenue >= Controller.instance.revenueMilestones[Controller.instance.GameLevel-1].Milestone)
         {
-            Controller.instance.increaseLevel(1);
+            Controller.instance.levelUp();
         }
     }
 }
