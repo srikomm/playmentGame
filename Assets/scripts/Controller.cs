@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Controller : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class Controller : MonoBehaviour
         public double DesignSkills;
         public double Salary;
 
-        public TeamMember(string SetName, double SetDevSkills, int SetDesignSkills, double SetSalary)
+        public TeamMember(string SetName, double SetDevSkills, double SetDesignSkills, double SetSalary)
         {
             Name = SetName;
             DevSkills = SetDevSkills;
@@ -36,6 +37,26 @@ public class Controller : MonoBehaviour
         }
     }
     public List<TeamMember> teamMembers;
+
+    [System.Serializable] public class Candidate
+    {
+        public string Name;
+        public double DevSkills;
+        public double DesignSkills;
+        public double Salary;
+        public int UnlockLevel;
+
+        public Candidate(string SetName, double SetDevSkills, double SetDesignSkills, double SetSalary, int SetUnlockLevel)
+        {
+            Name = SetName;
+            DevSkills = SetDevSkills;
+            DesignSkills = SetDesignSkills;
+            Salary = SetSalary;
+            UnlockLevel = SetUnlockLevel;
+        }
+    }
+    public List<Candidate> candidates;
+
     int daysSinceStart;
     public TMP_Text daysSinceStartText;
 
@@ -67,39 +88,46 @@ public class Controller : MonoBehaviour
 
     public List<Project> allProjects;
 
-    private float EMPLOYEE_SALARY_FREQUENCY = 3;
+    private float EMPLOYEE_SALARY_FREQUENCY = 1;
 
     // Start is called before the first frame update
     public void Start()
     {
-        cash = 1000;
+        cash = 220;
         brandValue = 0;
         revenue = 0;
         annotatorsCount = 2;
-        GameLevel = 0;
+        GameLevel = 1;
         AnnotatorSalary = 10;
         
         teamMembers = new List<TeamMember>();
-        teamMembers.Add(new TeamMember("Dev 1", 15, 2, 100));
-        teamMembers.Add(new TeamMember("Dev 2", 12, 2, 90));
+        teamMembers.Add(new TeamMember("Eve Wozniak", 15, 2, 100));
+        teamMembers.Add(new TeamMember("Zuckberg", 12, 2, 90));
         TeamManager.instance.RenderTeamMembers();
 
         revenueMilestones = new List<RevenueMilestone>();
-        revenueMilestones.Add(new RevenueMilestone(1, 10000));
-        revenueMilestones.Add(new RevenueMilestone(2, 100000));
-        revenueMilestones.Add(new RevenueMilestone(3, 1000000));
-        revenueMilestones.Add(new RevenueMilestone(4, 10000000));
-        revenueMilestones.Add(new RevenueMilestone(5, 100000000));
+        revenueMilestones.Add(new RevenueMilestone(2, 500));
+        revenueMilestones.Add(new RevenueMilestone(3, 1000));
+        revenueMilestones.Add(new RevenueMilestone(4, 2000));
+        revenueMilestones.Add(new RevenueMilestone(5, 4000));
 
         allProjects = new List<Project>();
-        allProjects.Add(new Project("First", 500, 0));
-        allProjects.Add(new Project("Second", 1000, 1));
-        allProjects.Add(new Project("Third", 2000, 1));
-        allProjects.Add(new Project("Fourth", 5000, 1));
+        allProjects.Add(new Project("First", 100, 1));
+        allProjects.Add(new Project("Second", 200, 1));
+        allProjects.Add(new Project("Third", 300, 2));
+        allProjects.Add(new Project("Fourth", 500, 2));
 
         MarketProjects.instance.RenderProjects();
         
         InvokeRepeating("deductSalaries", EMPLOYEE_SALARY_FREQUENCY, EMPLOYEE_SALARY_FREQUENCY);
+
+        candidates = new List<Candidate>();
+        candidates.Add(new Candidate("Howard Wolowitz", 15, 5, 120, 2));
+        candidates.Add(new Candidate("Eve Jobs", 1, 25, 120, 2));
+        candidates.Add(new Candidate("Charles Babbage", 15, 5, 120, 2));
+
+        CandidateManager.instance.RenderCandidates();
+        
         
     }
 
@@ -122,6 +150,15 @@ public class Controller : MonoBehaviour
         return teamMembers;
     }
 
+    public void HireCandidate(Candidate candidate)
+    {
+        teamMembers.Add(new TeamMember(candidate.Name, candidate.DevSkills, candidate.DesignSkills, candidate.Salary));
+        TeamManager.instance.RenderTeamMembers();
+        candidates.Remove(candidate);
+        CandidateManager.instance.RenderCandidates();
+        Debug.Log("Candidate Hired: " + candidate.Name);
+    }
+
     public void increaseRevenue(int increment)
     {
         revenue += increment;
@@ -137,6 +174,7 @@ public class Controller : MonoBehaviour
     {
         GameLevel += increment;
         MarketProjects.instance.RenderProjects();
+        CandidateManager.instance.RenderCandidates();
 
     }
     private void deductSalaries() 
@@ -147,6 +185,11 @@ public class Controller : MonoBehaviour
         {
             totalMonthlySalary += teamMember.Salary;
         }
-        cash -= totalMonthlySalary;
+        cash -= totalMonthlySalary/30;
+
+        if (cash < 0)
+        {
+            SceneManager.LoadScene("Level_1");
+        }
     }
 }

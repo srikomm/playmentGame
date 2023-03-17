@@ -21,6 +21,7 @@ public class InstantiateProgress : MonoBehaviour
     {
         if (newCard && newCard.GetComponent<ProgressBar2>().HasProgressCompleted())
         {
+            
             Destroy(newCard);
         }
     }
