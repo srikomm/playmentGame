@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
-public class ProgressBar2 : MonoBehaviour
+public class ProductProgressBar : MonoBehaviour
 {
     private bool hasProgressCompleted;
 
     // public TMP_Text title;
 
     private Transform progressValue;
-    private float stepSize = 0.1f;
-    private float stepRate = 1.0f;
+    private float stepSize;
+    [SerializeField] private float stepRate = 0.02f;
     GameObject progressBar;
 
 
@@ -43,10 +44,19 @@ public class ProgressBar2 : MonoBehaviour
         while (!hasProgressCompleted)
         {
             float currentVal = progressValue.GetComponent<RectTransform>().localScale.x;
-            Debug.Log(currentVal);
-            progressValue.GetComponent<RectTransform>().localScale = new Vector3(currentVal + stepSize, 1.0f, 1.0f);
+            // Debug.Log(currentVal);
+
+            double totalDevSkills = Controller.instance.getCurrentTotalDevSkills();
+            // double totalDesignSkills = 0;
+            float DevStepSize = (float) totalDevSkills/(float) Controller.instance.getCurrentLevelProductDevSkillsTarget()* (float) Time.deltaTime;
+            // Debug.Log("totalDevSkills: " + totalDevSkills);
+            // Debug.Log("getCurrentLevelProductDevSkillsTarget: " + Controller.instance.getCurrentLevelProductDevSkillsTarget());
+            // Debug.Log("Time.deltaTime: " + Time.deltaTime);
+            // Debug.Log("DevStepSize: " + DevStepSize);
+            // DesignstepSize = totalDesignSkills/Controller.instance.getCurrentLevelProductDevSkillsTarget()*Time.deltaTime;
+            progressValue.GetComponent<RectTransform>().localScale = new Vector3(currentVal + DevStepSize, 1.0f, 1.0f);
             yield return new WaitForSeconds(stepRate);
-            if (currentVal >= 0.9f)
+            if (currentVal >= 0.99f)
             {
                 hasProgressCompleted = true;
             }

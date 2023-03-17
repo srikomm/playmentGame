@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class InstantiateProgress : MonoBehaviour
+public class InstantiateProductProgress : MonoBehaviour
 {
     [SerializeField] public Transform canvas;
     [SerializeField] public Button buildProductBtn;
@@ -21,14 +21,14 @@ public class InstantiateProgress : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (newCard && newCard.GetComponent<ProgressBar2>().HasProgressCompleted())
+        if (newCard && newCard.GetComponent<ProductProgressBar>().HasProgressCompleted())
         {
             
             Destroy(newCard);
         }
     }
 
-    public void InstantiateProgressCard()
+    public void InstantiateProductProgressCard()
     {
         newCard = Instantiate(cardPrefab, canvas);
         newCard.transform.Find("name").GetComponent<TMP_Text>().text = Controller.instance.getCurrentLevelProductName();

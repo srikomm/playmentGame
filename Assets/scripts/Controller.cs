@@ -25,7 +25,7 @@ public class Controller : MonoBehaviour
     public int GameLevel;
     public TMP_Text GameLevelText;
     public double AnnotatorSalary;
-    public InstantiateProgress instantiateProgress;
+    public InstantiateProductProgress instantiateProductProgress;
     [SerializeField] public Button buildProductBtn;
 
     private GameObject productCard;
@@ -50,6 +50,48 @@ public class Controller : MonoBehaviour
         },
         {
             6, "PCS ANNOTATIONS"
+        }
+    };
+
+    Dictionary<int, double> PRODUCT_DEV_MAPPING = new Dictionary<int, double>(){
+        {
+            1, 30
+        },
+        {
+            2, 100
+        },
+        {
+            3, 400
+        },
+        {
+            4, 800
+        },
+        {
+            5, 1600
+        },
+        {
+            6, 3200
+        }
+    };
+
+    Dictionary<int, double> PRODUCT_DESIGN_MAPPING = new Dictionary<int, double>(){
+        {
+            1, 30
+        },
+        {
+            2, 60
+        },
+        {
+            3, 120
+        },
+        {
+            4, 240
+        },
+        {
+            5, 480
+        },
+        {
+            6, 960
         }
     };
           
@@ -136,8 +178,8 @@ public class Controller : MonoBehaviour
         AnnotatorSalary = 10;
 
         teamMembers = new List<TeamMember>();
-        teamMembers.Add(new TeamMember("Eve Wozniak", 15, 2, 100));
-        teamMembers.Add(new TeamMember("Zuckberg", 12, 2, 90));
+        teamMembers.Add(new TeamMember("Eve Wozniak", 15, 2, 170));
+        teamMembers.Add(new TeamMember("Zuckberg", 12, 2, 140));
         TeamManager.instance.RenderTeamMembers();
 
         revenueMilestones = new List<RevenueMilestone>();
@@ -158,11 +200,11 @@ public class Controller : MonoBehaviour
         InvokeRepeating("deductSalaries", EMPLOYEE_SALARY_FREQUENCY, EMPLOYEE_SALARY_FREQUENCY);
 
         candidates = new List<Candidate>();
-        candidates.Add(new Candidate("Howard Wolowitz", 15, 5, 120, 1));
-        candidates.Add(new Candidate("Eve Jobs", 1, 25, 120, 1));
-        candidates.Add(new Candidate("Charles Babbage", 15, 5, 120, 1));
-        candidates.Add(new Candidate("Barney Babbage", 15, 5, 120, 2));
-        candidates.Add(new Candidate("Barney Sabotage", 15, 5, 120, 2));
+        candidates.Add(new Candidate("Howard Wolowitz", 15, 5, 200, 1));
+        candidates.Add(new Candidate("Eve Jobs", 1, 25, 200, 1));
+        candidates.Add(new Candidate("Charles Babbage", 15, 5, 170, 1));
+        candidates.Add(new Candidate("Barney Babbage", 15, 5, 150, 2));
+        candidates.Add(new Candidate("Barney Sabotage", 35, -5, 180, 2));
 
         CandidateManager.instance.RenderCandidates();
         
@@ -221,7 +263,7 @@ public class Controller : MonoBehaviour
 
         if (cash < 0)
         {
-            SceneManager.LoadScene("Level_1");
+            SceneManager.LoadScene("GameOver_Screen");
         }
     }
 
@@ -238,16 +280,36 @@ public class Controller : MonoBehaviour
         GameLevel += LEVEL_INCREMENT;
         MarketProjects.instance.RenderProjects();
         CandidateManager.instance.RenderCandidates();
-        // instantiateProgress.UpdateButtonState(PRODUCT_LEVEL_MAPPING[GameLevel]);
+        // instantiateProductProgress.UpdateButtonState(PRODUCT_LEVEL_MAPPING[GameLevel]);
         updateProductCardName();
     }
 
     private void updateProductCardName() {
         productCard.transform.Find("name").GetComponent<TMP_Text>().text = PRODUCT_LEVEL_MAPPING[GameLevel + 1];
         productCard.transform.Find("Button").GetComponent<Button>().interactable = true;
+        productCard.transform.Find("value_value").GetComponent<TMP_Text>().text = getCurrentLevelProductDevSkillsTarget().ToString();
     }
 
     public string getCurrentLevelProductName() {
         return PRODUCT_LEVEL_MAPPING[GameLevel + 1];
+    }
+
+    public double getCurrentLevelProductDevSkillsTarget() {
+        return PRODUCT_DEV_MAPPING[GameLevel + 1];
+    }
+
+    public double getCurrentTotalDevSkills()
+    {
+        double totalDevSkills = 0;
+        foreach (TeamMember teamMember in teamMembers)
+            {
+                totalDevSkills += teamMember.DevSkills;
+                // totalDesignSkills += teamMember.DesignSkills;
+            }
+        return totalDevSkills;
+    }
+
+    public double getCurrentLevelProductDesignSkillsTarget() {
+        return PRODUCT_DESIGN_MAPPING[GameLevel + 1];
     }
 }
