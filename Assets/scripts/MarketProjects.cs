@@ -7,55 +7,24 @@ using TMPro;
 
 public class MarketProjects : MonoBehaviour
 {
+    public static MarketProjects instance;
+    private void Awake() => instance = this;
 
-    [System.Serializable] public class Project
+    public void RenderProjects()
     {
-        public string Name;
-        public double Revenue;
-        public int Level;
+        // allProjects = Controller.instance.getTeamMembers();
 
-        public Project(string SetName, double SetRevenue, int SetLevel)
-        {
-            Name = SetName;
-            Revenue = SetRevenue;
-            Level = SetLevel;
-        }
-    }
+        GameObject buttonTemplate = this.transform.GetChild (0).gameObject;
 
-    
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        List<Project> allProjects = new List<Project>();
-        allProjects.Add(new Project("First", 500, 0));
-        allProjects.Add(new Project("Second", 1000, 0));
-        allProjects.Add(new Project("Third", 2000, 1));
-        allProjects.Add(new Project("Fourth", 5000, 1));
-        
-
-        GameObject buttonTemplate = this.transform.GetChild (2).gameObject;
-
-        // int N = allProjects.;
-
-        for (int i=0; i < 2; i++){
-            GameObject g = (GameObject) Instantiate (buttonTemplate, this.transform);
-            g.transform.GetChild (1).GetComponent <TextMeshProUGUI> ().text = allProjects[i].Name;
-            g.transform.GetChild (4).GetComponent <TextMeshProUGUI> ().text = allProjects[i].Revenue.ToString();
-
-            if (allProjects[i].Level > 0){
-                g.SetActive(false);
+        for (int i=0; i < Controller.instance.allProjects.ToArray().Length; i++){
+            if (Controller.instance.allProjects[i].Level <= Controller.instance.GameLevel)
+            {
+                GameObject g = (GameObject) Instantiate (buttonTemplate, this.transform);
+                g.transform.GetChild (1).GetComponent <TextMeshProUGUI> ().text = Controller.instance.allProjects[i].Name;
+                g.transform.GetChild (3).GetComponent <TextMeshProUGUI> ().text = Controller.instance.allProjects[i].Revenue.ToString();
             }
         }
 
         Destroy (buttonTemplate);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
