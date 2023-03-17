@@ -161,6 +161,8 @@ public class Controller : MonoBehaviour
         candidates.Add(new Candidate("Howard Wolowitz", 15, 5, 120, 1));
         candidates.Add(new Candidate("Eve Jobs", 1, 25, 120, 1));
         candidates.Add(new Candidate("Charles Babbage", 15, 5, 120, 1));
+        candidates.Add(new Candidate("Barney Babbage", 15, 5, 120, 2));
+        candidates.Add(new Candidate("Barney Sabotage", 15, 5, 120, 2));
 
         CandidateManager.instance.RenderCandidates();
         
@@ -235,6 +237,7 @@ public class Controller : MonoBehaviour
     {
         GameLevel += LEVEL_INCREMENT;
         MarketProjects.instance.RenderProjects();
+        CandidateManager.instance.RenderCandidates();
         // instantiateProgress.UpdateButtonState(PRODUCT_LEVEL_MAPPING[GameLevel]);
         updateProductCardName();
     }

@@ -10,29 +10,24 @@ public class TeamManager : MonoBehaviour
 
     List<Controller.TeamMember> teamMembers;
 
-    // Start is called before the first frame update
-    public void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    public void Update()
-    {
-
-    }
-
     public void RenderTeamMembers()
     {
         teamMembers = Controller.instance.getTeamMembers();
 
         GameObject buttonTemplate = this.transform.GetChild (1).gameObject;
+        Debug.Log("ChildCount: " + this.transform.childCount);
+
+        for (int i=2; i< this.transform.childCount; i++) 
+        {
+            Destroy (this.transform.GetChild (i).gameObject);
+        }
 
         for (int i=0; i < teamMembers.ToArray().Length; i++){
             Debug.Log("TM" + i + " " + teamMembers[i].Name);
             GameObject g = (GameObject) Instantiate (buttonTemplate, this.transform);
             g.transform.GetChild (1).GetComponent <TextMeshProUGUI> ().text = teamMembers[i].Name;
             g.transform.GetChild (2).GetComponent <TextMeshProUGUI> ().text = teamMembers[i].DevSkills.ToString() + " / " + teamMembers[i].DesignSkills.ToString();
+            g.SetActive(true);
         }
 
         Destroy (buttonTemplate);

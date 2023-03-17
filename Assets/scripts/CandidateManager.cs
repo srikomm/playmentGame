@@ -23,6 +23,11 @@ public class CandidateManager : MonoBehaviour
     {
         GameObject buttonTemplate = this.transform.GetChild (0).gameObject;
 
+        for (int i=1; i< this.transform.childCount; i++) 
+        {
+            Destroy (this.transform.GetChild (i).gameObject);
+        }
+
         for (int i=0; i < Controller.instance.candidates.ToArray().Length; i++){
             
             
@@ -50,7 +55,6 @@ public class CandidateManager : MonoBehaviour
 
     void ItemClicked (int ItemIndex)
     {
-        Debug.Log("item " + ItemIndex + "clicked");
         Controller.instance.HireCandidate(Controller.instance.candidates[ItemIndex]);
     }
 
