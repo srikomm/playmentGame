@@ -19,7 +19,7 @@ public class ProgressBarLogic : MonoBehaviour
     void Start()
     {
         slider.value = 0;
-        IncrementProgress(.75f);
+        // IncrementProgress(.75f);
     }
 
     // Update is called once per frame
