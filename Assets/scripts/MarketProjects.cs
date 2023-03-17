@@ -8,15 +8,17 @@ using TMPro;
 public class MarketProjects : MonoBehaviour
 {
 
-    [Serializable] public class Project
+    [System.Serializable] public class Project
     {
         public string Name;
         public double Revenue;
+        public int Level;
 
-        public Project(string NewName, double NewRevenue)
+        public Project(string SetName, double SetRevenue, int SetLevel)
         {
-            Name = NewName;
-            Revenue = NewRevenue;
+            Name = SetName;
+            Revenue = SetRevenue;
+            Level = SetLevel;
         }
     }
 
@@ -28,18 +30,24 @@ public class MarketProjects : MonoBehaviour
     void Start()
     {
         List<Project> allProjects = new List<Project>();
-        allProjects.Add(new Project("First", 500));
-        allProjects.Add(new Project("Second", 1000));
+        allProjects.Add(new Project("First", 500, 0));
+        allProjects.Add(new Project("Second", 1000, 0));
+        allProjects.Add(new Project("Third", 2000, 1));
+        allProjects.Add(new Project("Fourth", 5000, 1));
         
 
-        GameObject buttonTemplate = this.transform.GetChild (0).gameObject;
+        GameObject buttonTemplate = this.transform.GetChild (2).gameObject;
 
         // int N = allProjects.;
 
         for (int i=0; i < 2; i++){
             GameObject g = (GameObject) Instantiate (buttonTemplate, this.transform);
-            g.transform.GetChild (0).GetComponent <TextMeshProUGUI> ().text = allProjects[i].Name;
-            g.transform.GetChild (1).GetComponent <TextMeshProUGUI> ().text = allProjects[i].Revenue.ToString(); 
+            g.transform.GetChild (1).GetComponent <TextMeshProUGUI> ().text = allProjects[i].Name;
+            g.transform.GetChild (4).GetComponent <TextMeshProUGUI> ().text = allProjects[i].Revenue.ToString();
+
+            if (allProjects[i].Level > 0){
+                g.SetActive(false);
+            }
         }
 
         Destroy (buttonTemplate);
