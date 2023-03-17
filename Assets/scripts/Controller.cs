@@ -97,7 +97,7 @@ public class Controller : MonoBehaviour
         brandValue = 0;
         revenue = 0;
         annotatorsCount = 2;
-        GameLevel = 1;
+        GameLevel = 0;
         AnnotatorSalary = 10;
         
         teamMembers = new List<TeamMember>();
@@ -106,25 +106,26 @@ public class Controller : MonoBehaviour
         TeamManager.instance.RenderTeamMembers();
 
         revenueMilestones = new List<RevenueMilestone>();
-        revenueMilestones.Add(new RevenueMilestone(2, 500));
-        revenueMilestones.Add(new RevenueMilestone(3, 1000));
+        revenueMilestones.Add(new RevenueMilestone(1, 500));
+        revenueMilestones.Add(new RevenueMilestone(2, 1000));
+        revenueMilestones.Add(new RevenueMilestone(3, 1500));
         revenueMilestones.Add(new RevenueMilestone(4, 2000));
         revenueMilestones.Add(new RevenueMilestone(5, 4000));
 
         allProjects = new List<Project>();
-        allProjects.Add(new Project("First", 100, 1));
-        allProjects.Add(new Project("Second", 200, 1));
-        allProjects.Add(new Project("Third", 300, 2));
-        allProjects.Add(new Project("Fourth", 500, 2));
+        allProjects.Add(new Project("First", 100, 0));
+        allProjects.Add(new Project("Second", 200, 0));
+        allProjects.Add(new Project("Third", 300, 1));
+        allProjects.Add(new Project("Fourth", 500, 1));
 
         MarketProjects.instance.RenderProjects();
         
         InvokeRepeating("deductSalaries", EMPLOYEE_SALARY_FREQUENCY, EMPLOYEE_SALARY_FREQUENCY);
 
         candidates = new List<Candidate>();
-        candidates.Add(new Candidate("Howard Wolowitz", 15, 5, 120, 2));
-        candidates.Add(new Candidate("Eve Jobs", 1, 25, 120, 2));
-        candidates.Add(new Candidate("Charles Babbage", 15, 5, 120, 2));
+        candidates.Add(new Candidate("Howard Wolowitz", 15, 5, 120, 1));
+        candidates.Add(new Candidate("Eve Jobs", 1, 25, 120, 1));
+        candidates.Add(new Candidate("Charles Babbage", 15, 5, 120, 1));
 
         CandidateManager.instance.RenderCandidates();
         
