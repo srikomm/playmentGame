@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class DayCounter : MonoBehaviour
 {
@@ -40,8 +41,14 @@ public class DayCounter : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        int seconds = (int)timer % 60;
-        days = seconds;
+
+        float minutes = Mathf.FloorToInt(timer / 60);
+        float seconds = Mathf.FloorToInt(timer - minutes * 60);
+
+        // int seconds = timer % 60;
+        // Debug.Log(seconds);
+        // days = (int) seconds / 5;
+        days = (int)(minutes * 60 + seconds)/2;
         dayText.text = days.ToString();
     }
 

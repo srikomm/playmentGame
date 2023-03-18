@@ -26,9 +26,9 @@ public class TeamManager : MonoBehaviour
             Debug.Log("TM: " + teamMembers[i].Name);
             GameObject g = (GameObject) Instantiate (buttonTemplate, this.transform);
 
-            Sprite sprite = Resources.Load ("Assets/avatars/Ellipse-" + i, typeof(Sprite)) as Sprite;
+            // Sprite sprite = Resources.Load ("Assets/avatars/Ellipse-" + i, typeof(Sprite)) as Sprite;
             
-            g.transform.GetChild (1).GetComponent <Image> ().sprite = sprite;
+            // g.transform.GetChild (1).GetComponent <Image> ().sprite = sprite;
 
             g.transform.GetChild (2).GetComponent <TextMeshProUGUI> ().text = teamMembers[i].Name;
             g.transform.GetChild (3).GetComponent <TextMeshProUGUI> ().text = teamMembers[i].DevSkills.ToString();

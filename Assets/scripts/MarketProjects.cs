@@ -38,7 +38,10 @@ public class MarketProjects: MonoBehaviour {
                 g.transform.GetChild(5).GetComponent < TextMeshProUGUI > ().text = Controller.instance.allProjects[i].UnitsToComplete.ToString();
                 
                 g.transform.GetChild(7).GetComponent < TextMeshProUGUI > ().text = "Assigned Annotators: " + Controller.instance.allProjects[i].AssignedAnnotatorsToProject.ToString();
-                // g.transform.GetChild(8).GetComponent < TextMeshProUGUI > ().text = "Progress: " + Controller.instance.allProjects[i].PercentageDone().ToString() + "%";
+                g.transform.GetChild(8).GetComponent < TextMeshProUGUI > ().text = "Progress: " + ((int)(Controller.instance.allProjects[i].updateAndGetPercentage())).ToString() + "%";
+                // if (Controller.instance.allProjects[i].PercentageDone > 0){
+                    
+                // }
 
                 g.transform.GetChild(6).GetComponent <Button> ().AddEventListener (i, ItemClicked);
                 if (Controller.instance.isCurrentLevelFeatureBuilt) {

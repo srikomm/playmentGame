@@ -12,6 +12,7 @@ public class Controller: MonoBehaviour {
         productCard = GameObject.Find("ProductCard");
         updateProductCardNameAndButtonState();
         projectsPanel = GameObject.Find("ProjectsPanel");
+        // DontDestroyOnLoad(GameObject);
     }
 
     public double cash;
@@ -20,6 +21,8 @@ public class Controller: MonoBehaviour {
     public TMP_Text projectsFinishedText;
     public double revenue;
     public TMP_Text revenueText;
+    public double tillNextMilestone;
+    public TMP_Text tillNextMilestoneText;
     public double annotatorsCount;
     public TMP_Text annotatorsCountText;
     public double occupiedAnnotators;
@@ -64,7 +67,7 @@ public class Controller: MonoBehaviour {
             30
         }, {
             2,
-            100
+            80
         }, {
             3,
             400
@@ -86,7 +89,7 @@ public class Controller: MonoBehaviour {
             30
         }, {
             2,
-            60
+            30
         }, {
             3,
             120
@@ -190,7 +193,8 @@ public class Controller: MonoBehaviour {
         }
 
         public double updateAndGetPercentage() {
-            PercentageDone = (double)(((Controller.instance.daysSinceStart - StartDay) * AssignedAnnotatorsToProject) / UnitsToComplete);
+            PercentageDone = (double)((((Controller.instance.daysSinceStart - StartDay) * AssignedAnnotatorsToProject) / UnitsToComplete) * 100);
+
             return PercentageDone;
         }
     }
@@ -228,12 +232,12 @@ public class Controller: MonoBehaviour {
 
     public List < Project > allProjects;
 
-    private float EMPLOYEE_SALARY_FREQUENCY = 1;
+    private float EMPLOYEE_SALARY_FREQUENCY = 2;
     private float RENDER_FREQUENCY = 1;
 
     // Start is called before the first frame update
     public void Start() {
-        cash = 20000;
+        cash = 2000;
         projectsFinished = 0;
         revenue = 0;
         annotatorsCount = 20;
@@ -337,7 +341,13 @@ public class Controller: MonoBehaviour {
         occupiedAnnotatorsText.text = occupiedAnnotators.ToString();
         GameLevelText.text = (GameLevel + 1).ToString();
 
+        tillNextMilestone = revenueMilestones[(int)GameLevel].Milestone - revenue;
+        tillNextMilestoneText.text = "$" + tillNextMilestone.ToString() + " till next level!";
+        GameValues.revenue = revenue;
+        
         daysSinceStart = DayCounter.Instance.getDays();
+        GameValues.days = daysSinceStart;
+        // Debug.Log(daysSinceStart);
         daysSinceStartText.text = daysSinceStart.ToString();
         checkRevenueMilestones();
         runProjectsRoutine();

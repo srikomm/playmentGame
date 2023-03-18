@@ -36,8 +36,8 @@ public class CandidateManager : MonoBehaviour
             GameObject g = (GameObject) Instantiate (buttonTemplate, this.transform);
 
             g.transform.GetChild (0).transform.GetChild (1).GetComponent <TextMeshProUGUI> ().text = Controller.instance.candidates[i].Name;
-            g.transform.GetChild (0).transform.GetChild (2).GetComponent <TextMeshProUGUI> ().text = "Dev: " + Controller.instance.candidates[i].DevSkills.ToString();
-            g.transform.GetChild (0).transform.GetChild (3).GetComponent <TextMeshProUGUI> ().text = "Design: " + Controller.instance.candidates[i].DesignSkills.ToString();
+            g.transform.GetChild (0).transform.GetChild (2).GetComponent <TextMeshProUGUI> ().text = Controller.instance.candidates[i].DevSkills.ToString();
+            g.transform.GetChild (0).transform.GetChild (3).GetComponent <TextMeshProUGUI> ().text = Controller.instance.candidates[i].DesignSkills.ToString();
             g.transform.GetChild (0).transform.GetChild (6).GetComponent <TextMeshProUGUI> ().text = "Salary: " + Controller.instance.candidates[i].Salary.ToString();
             
             if (Controller.instance.candidates[i].UnlockLevel > Controller.instance.GameLevel)
