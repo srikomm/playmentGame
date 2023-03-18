@@ -173,6 +173,10 @@ public class Controller: MonoBehaviour {
             set;
         }
         public ProjectState ProjectState;
+        public double PercentageDone {
+            get;
+            set;
+        }
 
         public Project(string SetName, double SetRevenue, double SetLevel, double SetUnitsToComplete) {
             Name = SetName;
@@ -182,6 +186,12 @@ public class Controller: MonoBehaviour {
             StartDay = -1;
             AssignedAnnotatorsToProject = 0;
             ProjectState = ProjectState.YET_TO_BE_PICKED_UP;
+            PercentageDone = 0;
+        }
+
+        public double updateAndGetPercentage() {
+            PercentageDone = (double)(((Controller.instance.daysSinceStart - StartDay) * AssignedAnnotatorsToProject) / UnitsToComplete);
+            return PercentageDone;
         }
     }
 
@@ -221,6 +231,7 @@ public class Controller: MonoBehaviour {
     public List < Project > allProjects;
 
     private float EMPLOYEE_SALARY_FREQUENCY = 1;
+    private float RENDER_FREQUENCY = 1;
 
     // Start is called before the first frame update
     public void Start() {
@@ -259,6 +270,7 @@ public class Controller: MonoBehaviour {
         MarketProjects.instance.RenderProjects();
 
         InvokeRepeating("deductSalaries", EMPLOYEE_SALARY_FREQUENCY, EMPLOYEE_SALARY_FREQUENCY);
+        InvokeRepeating("renderProjects", RENDER_FREQUENCY, RENDER_FREQUENCY);
 
         candidates = new List < Candidate > ();
         candidates.Add(new Candidate("Howard Wolowitz", 15, 5, 200, 1));
@@ -372,11 +384,8 @@ public class Controller: MonoBehaviour {
     }
 
     private void runProjectsRoutine() {
-
         foreach(Project project in allProjects) {
-            // Debug.Log("Project: " + project.ProjectState);
             if (project.ProjectState == ProjectState.STARTED) {
-                // Debug.Log("Project Routine: " + project.Name);
                 double unitsSpent = (daysSinceStart - project.StartDay) * project.AssignedAnnotatorsToProject;
                 if (unitsSpent >= project.UnitsToComplete) {
                     // project is complete
@@ -384,6 +393,10 @@ public class Controller: MonoBehaviour {
                 }
             }
         }
+    }
+
+    private void renderProjects() {
+        MarketProjects.instance.RenderProjects();
     }
 
     private void disableProjectButton(int projectIndex) {
