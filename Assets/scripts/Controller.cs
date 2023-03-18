@@ -330,9 +330,9 @@ public class Controller: MonoBehaviour {
 
     // Update is called once per frame
     public void Update() {
-        cashText.text = ((int) cash).ToString();
+        cashText.text = "$" + ((int) cash).ToString();
         projectsFinishedText.text = projectsFinished.ToString();
-        revenueText.text = revenue.ToString();
+        revenueText.text = "$" + revenue.ToString();
         annotatorsCountText.text = annotatorsCount.ToString();
         occupiedAnnotatorsText.text = occupiedAnnotators.ToString();
         GameLevelText.text = (GameLevel + 1).ToString();

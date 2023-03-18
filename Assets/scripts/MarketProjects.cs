@@ -34,7 +34,7 @@ public class MarketProjects: MonoBehaviour {
                 (Controller.instance.allProjects[i].ProjectState != Controller.ProjectState.COMPLETED)) {
                 GameObject g = (GameObject) Instantiate(buttonTemplate, this.transform);
                 g.transform.GetChild(1).GetComponent < TextMeshProUGUI > ().text = Controller.instance.allProjects[i].Name;
-                g.transform.GetChild(3).GetComponent < TextMeshProUGUI > ().text = Controller.instance.allProjects[i].Revenue.ToString();
+                g.transform.GetChild(3).GetComponent < TextMeshProUGUI > ().text = "$" + Controller.instance.allProjects[i].Revenue.ToString();
                 g.transform.GetChild(5).GetComponent < TextMeshProUGUI > ().text = Controller.instance.allProjects[i].UnitsToComplete.ToString();
                 
                 g.transform.GetChild(7).GetComponent < TextMeshProUGUI > ().text = "Assigned Annotators: " + Controller.instance.allProjects[i].AssignedAnnotatorsToProject.ToString();
