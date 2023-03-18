@@ -295,7 +295,7 @@ public class Controller: MonoBehaviour {
 
     public void FireAnnotator()
     {
-        if (annotatorsCount > 0)
+        if ((annotatorsCount > 0) && (occupiedAnnotators < annotatorsCount))
         {
             annotatorsCount -= 1;
         }
