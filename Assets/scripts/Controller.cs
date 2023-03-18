@@ -16,13 +16,14 @@ public class Controller: MonoBehaviour {
 
     public double cash;
     public TMP_Text cashText;
-    public double brandValue;
-    public TMP_Text brandValueText;
+    public double projectsFinished;
+    public TMP_Text projectsFinishedText;
     public double revenue;
     public TMP_Text revenueText;
     public double annotatorsCount;
     public TMP_Text annotatorsCountText;
     public double occupiedAnnotators;
+    public TMP_Text occupiedAnnotatorsText;
     public double GameLevel;
     public TMP_Text GameLevelText;
     public double AnnotatorSalary;
@@ -56,7 +57,7 @@ public class Controller: MonoBehaviour {
         }
     };
 
-    Dictionary < int, double > PRODUCT_DEV_MAPPING = new Dictionary < int, double > () {
+    Dictionary < double, double > PRODUCT_DEV_MAPPING = new Dictionary < double, double > () {
         {
             1,
             30
@@ -78,7 +79,7 @@ public class Controller: MonoBehaviour {
         }
     };
 
-    Dictionary < int, double > PRODUCT_DESIGN_MAPPING = new Dictionary < int, double > () {
+    Dictionary < double, double > PRODUCT_DESIGN_MAPPING = new Dictionary < double, double > () {
         {
             1,
             30
@@ -213,6 +214,7 @@ public class Controller: MonoBehaviour {
         project.AssignedAnnotatorsToProject = 0;
         project.ProjectState = ProjectState.COMPLETED;
         MarketProjects.instance.RenderProjects();
+        projectsFinished += 1;
     }
 
     public List < Project > allProjects;
@@ -222,7 +224,7 @@ public class Controller: MonoBehaviour {
     // Start is called before the first frame update
     public void Start() {
         cash = 490;
-        brandValue = 0;
+        projectsFinished = 0;
         revenue = 0;
         annotatorsCount = 20;
         occupiedAnnotators = 0;
@@ -243,12 +245,14 @@ public class Controller: MonoBehaviour {
         revenueMilestones.Add(new RevenueMilestone(5, 4000));
 
         allProjects = new List < Project > ();
-        allProjects.Add(new Project("First", 100, 0, 5));
-        allProjects.Add(new Project("Second", 200, 0, 10));
-        allProjects.Add(new Project("Sec", 300, 0, 7));
-        allProjects.Add(new Project("Fir", 400, 0, 12));
-        allProjects.Add(new Project("Third", 300, 1, 30));
-        allProjects.Add(new Project("Fourth", 500, 1, 50));
+        allProjects.Add(new Project("First", 100, 0, 50));
+        allProjects.Add(new Project("Second", 200, 0, 100));
+        allProjects.Add(new Project("Third", 300, 0, 150));
+        allProjects.Add(new Project("Fourth", 200, 0, 400));
+        allProjects.Add(new Project("Fifth", 300, 1, 700));
+        allProjects.Add(new Project("Sixth", 400, 1, 1200));
+        allProjects.Add(new Project("7th", 300, 1, 3000));
+        allProjects.Add(new Project("8th", 500, 2, 5000));
 
         MarketProjects.instance.RenderProjects();
 
@@ -267,10 +271,11 @@ public class Controller: MonoBehaviour {
 
     // Update is called once per frame
     public void Update() {
-        cashText.text = cash.ToString();
-        brandValueText.text = brandValue.ToString();
+        cashText.text = ((int) cash).ToString();
+        projectsFinishedText.text = projectsFinished.ToString();
         revenueText.text = revenue.ToString();
-        annotatorsCountText.text = annotatorsCount.ToString() + "/" + occupiedAnnotators.ToString();
+        annotatorsCountText.text = annotatorsCount.ToString();
+        occupiedAnnotatorsText.text = occupiedAnnotators.ToString();
         GameLevelText.text = (GameLevel + 1).ToString();
 
         daysSinceStart = DayCounter.Instance.getDays();
@@ -283,6 +288,20 @@ public class Controller: MonoBehaviour {
         return teamMembers;
     }
 
+    public void HireAnnotator()
+    {
+        annotatorsCount += 1;
+    }
+
+    public void FireAnnotator()
+    {
+        if (annotatorsCount > 0)
+        {
+            annotatorsCount -= 1;
+        }
+        
+    }
+
     public void HireCandidate(Candidate candidate) {
         teamMembers.Add(new TeamMember(candidate.Name, candidate.DevSkills, candidate.DesignSkills, candidate.Salary));
         TeamManager.instance.RenderTeamMembers();
@@ -291,7 +310,8 @@ public class Controller: MonoBehaviour {
         // Debug.Log("Candidate Hired: " + candidate.Name);
     }
 
-    public void increaseRevenue(double increment) {
+    public void increaseRevenue(double increment) 
+    {
         revenue += increment;
         cash += increment;
     }

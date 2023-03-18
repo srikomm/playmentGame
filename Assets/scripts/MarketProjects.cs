@@ -35,6 +35,7 @@ public class MarketProjects: MonoBehaviour {
                 GameObject g = (GameObject) Instantiate(buttonTemplate, this.transform);
                 g.transform.GetChild(1).GetComponent < TextMeshProUGUI > ().text = Controller.instance.allProjects[i].Name;
                 g.transform.GetChild(3).GetComponent < TextMeshProUGUI > ().text = Controller.instance.allProjects[i].Revenue.ToString();
+                g.transform.GetChild(5).GetComponent < TextMeshProUGUI > ().text = Controller.instance.allProjects[i].UnitsToComplete.ToString();
 
                 g.transform.GetChild(6).GetComponent <Button> ().AddEventListener (i, ItemClicked);
                 if( Controller.instance.allProjects[i].ProjectState == Controller.ProjectState.YET_TO_BE_PICKED_UP)

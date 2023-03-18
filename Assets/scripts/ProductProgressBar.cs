@@ -44,16 +44,10 @@ public class ProductProgressBar : MonoBehaviour
         while (!hasProgressCompleted)
         {
             float currentVal = progressValue.GetComponent<RectTransform>().localScale.x;
-            // Debug.Log(currentVal);
 
             double totalDevSkills = Controller.instance.getCurrentTotalDevSkills();
             // double totalDesignSkills = 0;
             float DevStepSize = (float) totalDevSkills/(float) Controller.instance.getCurrentLevelProductDevSkillsTarget()* (float) Time.deltaTime;
-            // Debug.Log("totalDevSkills: " + totalDevSkills);
-            // Debug.Log("getCurrentLevelProductDevSkillsTarget: " + Controller.instance.getCurrentLevelProductDevSkillsTarget());
-            // Debug.Log("Time.deltaTime: " + Time.deltaTime);
-            // Debug.Log("DevStepSize: " + DevStepSize);
-            // DesignstepSize = totalDesignSkills/Controller.instance.getCurrentLevelProductDevSkillsTarget()*Time.deltaTime;
             progressValue.GetComponent<RectTransform>().localScale = new Vector3(currentVal + DevStepSize, 1.0f, 1.0f);
             yield return new WaitForSeconds(stepRate);
             if (currentVal >= 0.9f)
