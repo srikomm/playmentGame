@@ -51,7 +51,7 @@ public class MarketProjects: MonoBehaviour {
                     }
                 }
                 else {
-                    if ((Controller.instance.allProjects[i].Level <= Controller.instance.GameLevel) &&
+                    if ((Controller.instance.allProjects[i].Level < Controller.instance.GameLevel) &&
                     ( Controller.instance.allProjects[i].ProjectState == Controller.ProjectState.YET_TO_BE_PICKED_UP))
                     {
                         g.transform.GetChild(6).GetComponent <Button> ().interactable = true;
