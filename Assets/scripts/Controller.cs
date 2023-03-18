@@ -199,8 +199,6 @@ public class Controller: MonoBehaviour {
 
         int numberOfAnnotators = int.Parse(projectsPanel.transform.GetChild(2).GetComponent < TMP_InputField > ().text);
 
-        Debug.Log("Project Started: " + project.Name);
-
         if ((numberOfAnnotators <= 0) || (Controller.instance.annotatorsCount == Controller.instance.occupiedAnnotators) || (project.Level > Controller.instance.GameLevel) || (isCurrentLevelFeatureBuilt == false)) {
             return false;
         }
