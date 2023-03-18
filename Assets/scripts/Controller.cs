@@ -288,7 +288,7 @@ public class Controller: MonoBehaviour {
         TeamManager.instance.RenderTeamMembers();
         candidates.Remove(candidate);
         CandidateManager.instance.RenderCandidates();
-        Debug.Log("Candidate Hired: " + candidate.Name);
+        // Debug.Log("Candidate Hired: " + candidate.Name);
     }
 
     public void increaseRevenue(double increment) {

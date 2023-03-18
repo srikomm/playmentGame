@@ -56,7 +56,7 @@ public class ProductProgressBar : MonoBehaviour
             // DesignstepSize = totalDesignSkills/Controller.instance.getCurrentLevelProductDevSkillsTarget()*Time.deltaTime;
             progressValue.GetComponent<RectTransform>().localScale = new Vector3(currentVal + DevStepSize, 1.0f, 1.0f);
             yield return new WaitForSeconds(stepRate);
-            if (currentVal >= 0.99f)
+            if (currentVal >= 0.9f)
             {
                 hasProgressCompleted = true;
             }

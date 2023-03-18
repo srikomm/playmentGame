@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class TeamManager : MonoBehaviour
@@ -22,7 +23,13 @@ public class TeamManager : MonoBehaviour
         }
 
         for (int i=0; i < teamMembers.ToArray().Length; i++){
+            Debug.Log("TM: " + teamMembers[i].Name);
             GameObject g = (GameObject) Instantiate (buttonTemplate, this.transform);
+
+            Sprite sprite = Resources.Load ("Assets/avatars/Ellipse-" + i, typeof(Sprite)) as Sprite;
+            
+            g.transform.GetChild (1).GetComponent <Image> ().sprite = sprite;
+
             g.transform.GetChild (2).GetComponent <TextMeshProUGUI> ().text = teamMembers[i].Name;
             g.transform.GetChild (3).GetComponent <TextMeshProUGUI> ().text = teamMembers[i].DevSkills.ToString();
             g.transform.GetChild (4).GetComponent <TextMeshProUGUI> ().text = teamMembers[i].DesignSkills.ToString();
