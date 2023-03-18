@@ -13,8 +13,7 @@ public class InstantiateProductProgress : MonoBehaviour
     // private TMP_Text progressCardName;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         cardPrefab = Resources.Load("ProgressCard") as GameObject;
     }
 
@@ -31,12 +30,11 @@ public class InstantiateProductProgress : MonoBehaviour
     public void InstantiateProductProgressCard()
     {
         newCard = Instantiate(cardPrefab, canvas);
-        newCard.transform.Find("name").GetComponent<TMP_Text>().text = Controller.instance.getCurrentLevelProductName();
+        newCard.transform.Find("name").GetComponent < TMP_Text > ().text = Controller.instance.getCurrentLevelProductName();
         buildProductBtn.interactable = false;
     }
 
-    public void UpdateButtonState()
-    {
+    public void UpdateButtonState() {
         // newCard.transform.Find("name").GetComponent<TMP_Text>().text = currentLevelProductName;
         buildProductBtn.interactable = true;
     }
