@@ -29,6 +29,7 @@ public class Controller: MonoBehaviour {
     public double AnnotatorSalary;
     public InstantiateProductProgress instantiateProductProgress;
     [SerializeField] public Button buildProductBtn;
+    public bool isCurrentLevelFeatureBuilt;
 
     private GameObject productCard;
     private GameObject projectsPanel;
@@ -190,7 +191,7 @@ public class Controller: MonoBehaviour {
 
         Debug.Log("Project Started: " + project.Name);
 
-        if ((numberOfAnnotators <= 0) || (Controller.instance.annotatorsCount == Controller.instance.occupiedAnnotators) || (project.Level > Controller.instance.GameLevel)) {
+        if ((numberOfAnnotators <= 0) || (Controller.instance.annotatorsCount == Controller.instance.occupiedAnnotators) || (project.Level > Controller.instance.GameLevel) || (isCurrentLevelFeatureBuilt == false)) {
             return false;
         }
         if (numberOfAnnotators > (Controller.instance.annotatorsCount - Controller.instance.occupiedAnnotators)) {
@@ -230,6 +231,7 @@ public class Controller: MonoBehaviour {
         occupiedAnnotators = 0;
         GameLevel = 0;
         AnnotatorSalary = 10;
+        isCurrentLevelFeatureBuilt = false;
 
         teamMembers = new List < TeamMember > ();
         teamMembers.Add(new TeamMember("Eve Wozniak", 15, 2, 170));
@@ -316,12 +318,6 @@ public class Controller: MonoBehaviour {
         cash += increment;
     }
 
-    public void increaseLevel(double increment) {
-        GameLevel += increment;
-        MarketProjects.instance.RenderProjects();
-        CandidateManager.instance.RenderCandidates();
-    }
-
     private void deductSalaries() {
         double totalMonthlySalary = 0;
         totalMonthlySalary += annotatorsCount * AnnotatorSalary;
@@ -343,9 +339,9 @@ public class Controller: MonoBehaviour {
 
     public void levelUp() {
         GameLevel += LEVEL_INCREMENT;
+        isCurrentLevelFeatureBuilt = false;
         MarketProjects.instance.RenderProjects();
         CandidateManager.instance.RenderCandidates();
-        // instantiateProgress.UpdateButtonState(PRODUCT_LEVEL_MAPPING[GameLevel]);
         updateProductCardNameAndButtonState();
     }
 

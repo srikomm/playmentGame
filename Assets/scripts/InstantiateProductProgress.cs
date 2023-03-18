@@ -22,7 +22,8 @@ public class InstantiateProductProgress : MonoBehaviour
     {
         if (newCard && newCard.GetComponent<ProductProgressBar>().HasProgressCompleted())
         {
-            
+            Controller.instance.isCurrentLevelFeatureBuilt = true;
+            MarketProjects.instance.RenderProjects();
             Destroy(newCard);
         }
     }

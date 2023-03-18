@@ -40,13 +40,26 @@ public class MarketProjects: MonoBehaviour {
                 g.transform.GetChild(7).GetComponent < TextMeshProUGUI > ().text = "Assigned Annotators: " + Controller.instance.allProjects[i].AssignedAnnotatorsToProject.ToString();
 
                 g.transform.GetChild(6).GetComponent <Button> ().AddEventListener (i, ItemClicked);
-                if( Controller.instance.allProjects[i].ProjectState == Controller.ProjectState.YET_TO_BE_PICKED_UP)
-                {
-                    g.transform.GetChild(6).GetComponent <Button> ().interactable = true;
+                if (Controller.instance.isCurrentLevelFeatureBuilt) {
+                    if( Controller.instance.allProjects[i].ProjectState == Controller.ProjectState.YET_TO_BE_PICKED_UP)
+                    {
+                        g.transform.GetChild(6).GetComponent <Button> ().interactable = true;
+                    }
+                    else if ( Controller.instance.allProjects[i].ProjectState == Controller.ProjectState.STARTED) {
+                        g.transform.GetChild(6).GetComponent <Button> ().interactable = false;
+                    }
                 }
-                else if ( Controller.instance.allProjects[i].ProjectState == Controller.ProjectState.STARTED) {
-                    g.transform.GetChild(6).GetComponent <Button> ().interactable = false;
+                else {
+                    if ((Controller.instance.allProjects[i].Level <= Controller.instance.GameLevel) &&
+                    ( Controller.instance.allProjects[i].ProjectState == Controller.ProjectState.YET_TO_BE_PICKED_UP))
+                    {
+                        g.transform.GetChild(6).GetComponent <Button> ().interactable = true;
+                    }
+                    else {
+                        g.transform.GetChild(6).GetComponent <Button> ().interactable = false;
+                    }
                 }
+                
             }
         }
 
