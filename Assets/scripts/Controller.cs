@@ -54,7 +54,7 @@ public class Controller: MonoBehaviour {
             "SFV2 ANNOTATIONS"
         }, {
             6,
-            "PCS ANNOTATIONS"
+            "ML CoPilot v1"
         }
     };
 
@@ -233,37 +233,76 @@ public class Controller: MonoBehaviour {
 
     // Start is called before the first frame update
     public void Start() {
-        cash = 490;
+        cash = 20000;
         projectsFinished = 0;
         revenue = 0;
         annotatorsCount = 20;
         occupiedAnnotators = 0;
         GameLevel = 0;
-        AnnotatorSalary = 10;
+        AnnotatorSalary = 100;
         isCurrentLevelFeatureBuilt = false;
 
         teamMembers = new List < TeamMember > ();
-        teamMembers.Add(new TeamMember("Eve Wozniak", 15, 2, 170));
+        teamMembers.Add(new TeamMember("Steve Wozniak", 15, 2, 1500));
         teamMembers.Add(new TeamMember("Zuckberg", 12, 2, 140));
 
         TeamManager.instance.RenderTeamMembers();
 
         revenueMilestones = new List < RevenueMilestone > ();
-        revenueMilestones.Add(new RevenueMilestone(1, 500));
-        revenueMilestones.Add(new RevenueMilestone(2, 1000));
-        revenueMilestones.Add(new RevenueMilestone(3, 1500));
-        revenueMilestones.Add(new RevenueMilestone(4, 2000));
-        revenueMilestones.Add(new RevenueMilestone(5, 4000));
+        revenueMilestones.Add(new RevenueMilestone(1, 6000));
+        revenueMilestones.Add(new RevenueMilestone(2, 30000));
+        revenueMilestones.Add(new RevenueMilestone(3, 100000));
+        revenueMilestones.Add(new RevenueMilestone(4, 500000));
+        revenueMilestones.Add(new RevenueMilestone(5, 2000000));
+        revenueMilestones.Add(new RevenueMilestone(6, 5000000));
 
         allProjects = new List < Project > ();
-        allProjects.Add(new Project("First", 100, 0, 50));
-        allProjects.Add(new Project("Second", 200, 0, 100));
-        allProjects.Add(new Project("Third", 300, 0, 150));
-        allProjects.Add(new Project("Fourth", 200, 0, 400));
-        allProjects.Add(new Project("Fifth", 300, 1, 700));
-        allProjects.Add(new Project("Sixth", 400, 1, 1200));
-        allProjects.Add(new Project("7th", 300, 1, 3000));
-        allProjects.Add(new Project("8th", 500, 2, 5000));
+        allProjects.Add(new Project("Flipkart Classification",  1000, 0, 50));
+        allProjects.Add(new Project("Myntra Comparison",        2000, 0, 100));
+        allProjects.Add(new Project("Ola Transcription",        3000, 0, 150));
+        allProjects.Add(new Project("PayTM Tagging",            2000, 0, 300));
+
+        allProjects.Add(new Project("Cortexica Boxes",          3000, 1, 200));
+        allProjects.Add(new Project("Cute Cats",                4000, 1, 300));
+        allProjects.Add(new Project("Starsky Lanes",            3000, 1, 400));
+        allProjects.Add(new Project("DriveAI Boxes",            15000, 1, 800));
+        allProjects.Add(new Project("Fish Polygons",            17000, 1, 900));
+
+        allProjects.Add(new Project("Nuro Segmentation",        9000, 2, 900));
+        allProjects.Add(new Project("MapBox Segmentation",      10000, 2, 1000));
+        allProjects.Add(new Project("Transformer Boxes",        15000, 2, 1600));
+        allProjects.Add(new Project("BeaverDam Videos",         17000, 2, 1500));
+        allProjects.Add(new Project("Nuro DE",                  5000, 2, 700));
+        allProjects.Add(new Project("DriveAI Videos",           7000, 2, 600));
+        allProjects.Add(new Project("UoB Landmarks",            6000, 2, 900));
+        allProjects.Add(new Project("ZF Object Tracking",       11000, 2, 800));
+
+        allProjects.Add(new Project("BeaverDam Videos",         17000, 3, 7000));
+        allProjects.Add(new Project("Nuro DE",                  17000, 3, 8000));
+        allProjects.Add(new Project("Starsky Videos",           19000, 3, 9000));
+        allProjects.Add(new Project("Cruise Landmarks",         20000, 3, 6000));
+        allProjects.Add(new Project("ZF Object Tracking",       21000, 3, 7000));
+        allProjects.Add(new Project("Magna Object Tracking",    25000, 3, 15000));
+
+        allProjects.Add(new Project("PlusAI 3D Cuboids",        50000, 4, 25000));
+        allProjects.Add(new Project("ZF 3D Cuboids",            70000, 4, 35000));
+        allProjects.Add(new Project("Magna 3D Cuboids",         500000, 4, 250000));
+        allProjects.Add(new Project("BMW Boxes",                300000, 4, 19000));
+        allProjects.Add(new Project("BMW Videos",               250000, 4, 15000));
+        allProjects.Add(new Project("BMW Segmentation",         150000, 4, 7000));
+        allProjects.Add(new Project("BMW 3D Cuboids",           1000000, 4, 40000));
+
+        allProjects.Add(new Project("Magna Linking",             1500000, 5, 1000000));
+        allProjects.Add(new Project("UniBW Linking",             250000, 5, 15000));
+        allProjects.Add(new Project("SSIC Linking",              250000, 5, 15000));
+        allProjects.Add(new Project("SSIC Segmentation",         1000000, 5, 35000));
+        allProjects.Add(new Project("BMW Linking",               900000, 5, 50000));
+
+        allProjects.Add(new Project("BMW 3DPC",                   15000000, 6, 500000));
+        allProjects.Add(new Project("ZF SF",                      25000000, 6, 600000));
+        allProjects.Add(new Project("Qualcomm SeqPCS",            35000000, 6, 1700000));
+        allProjects.Add(new Project("SharperShape PCS",           50000000, 6, 1500000));
+
 
         MarketProjects.instance.RenderProjects();
 
@@ -271,11 +310,19 @@ public class Controller: MonoBehaviour {
         InvokeRepeating("renderProjects", RENDER_FREQUENCY, RENDER_FREQUENCY);
 
         candidates = new List < Candidate > ();
-        candidates.Add(new Candidate("Howard Wolowitz", 15, 5, 200, 1));
-        candidates.Add(new Candidate("Eve Jobs", 1, 25, 200, 1));
-        candidates.Add(new Candidate("Charles Babbage", 15, 5, 170, 1));
-        candidates.Add(new Candidate("Barney Babbage", 15, 5, 150, 2));
-        candidates.Add(new Candidate("Barney Sabotage", 35, -5, 180, 2));
+        candidates.Add(new Candidate("Howard Wolowitz", 15, 5, 3000, 1));
+        candidates.Add(new Candidate("Steve Jobs", 1, 65, 5000, 1));
+        candidates.Add(new Candidate("Charles Babbage", 15, 5, 7000, 1));
+        candidates.Add(new Candidate("Hewlett", 35, 15, 24000, 2));
+        candidates.Add(new Candidate("Packard", 25, 25, 15000, 2));
+        candidates.Add(new Candidate("Larry Page", 25, 5, 15000, 2));
+        candidates.Add(new Candidate("Pieter Levels", 25, 45, 15000, 2));
+        candidates.Add(new Candidate("Felon Musk", 35, -5, 5000, 2));
+        candidates.Add(new Candidate("Mehnati Mehta", 35, 25, 24000, 2));
+        candidates.Add(new Candidate("Sergey Brin", 25, 15, 15000, 2));
+        candidates.Add(new Candidate("Larry Elisson", 35, 15, 5000, 2));
+        candidates.Add(new Candidate("Alan Turing", 88, 88, 75000, 5));
+        candidates.Add(new Candidate("Linus Torvaelds", 99, 99, 99000, 5));
 
         CandidateManager.instance.RenderCandidates();
 
@@ -368,17 +415,24 @@ public class Controller: MonoBehaviour {
         return PRODUCT_DEV_MAPPING[GameLevel + 1];
     }
 
+    public double getCurrentLevelProductDesignSkillsTarget() {
+        return PRODUCT_DESIGN_MAPPING[GameLevel + 1];
+    }
+
     public double getCurrentTotalDevSkills() {
         double totalDevSkills = 0;
         foreach(TeamMember teamMember in teamMembers) {
             totalDevSkills += teamMember.DevSkills;
-            // totalDesignSkills += teamMember.DesignSkills;
         }
         return totalDevSkills;
     }
 
-    public double getCurrentLevelProductDesignSkillsTarget() {
-        return PRODUCT_DESIGN_MAPPING[GameLevel + 1];
+    public double getCurrentTotalDesignSkills() {
+        double totalDesignSkills = 0;
+        foreach(TeamMember teamMember in teamMembers) {
+            totalDesignSkills += teamMember.DesignSkills;
+        }
+        return totalDesignSkills;
     }
 
     private void runProjectsRoutine() {
